@@ -8,9 +8,17 @@ export const charactersFetched = (movieCharacters) => {
   };
 };
 
-export function fetchMovieCharacters(searchTerm) {
+export function fetchMovieCharacters(searchTerms, gender) {
   return async (dispatch) => {
-    const res = await axios.get(`${apiUrl}/characters?search=${searchTerm}`);
+    let res;
+
+    if (gender) {
+      res = await axios.get(
+        `${apiUrl}/characters?search=${searchTerms}&gender=${gender}`
+      );
+    } else {
+      res = await axios.get(`${apiUrl}/characters?search=${searchTerms}`);
+    }
     const charactersList = res.data;
 
     dispatch(charactersFetched(charactersList));
