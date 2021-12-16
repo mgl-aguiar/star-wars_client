@@ -10,7 +10,7 @@ export const planetsFetched = (planetsByClimate) => {
 
 export function fetchPlanetsByClimate(climateType) {
   return async (dispatch) => {
-    const res = await axios.get(`${apiUrl}/planets?search=${climateType}`);
+    const res = await axios.get(`${apiUrl}/planets?climate=${climateType}`);
     const planetList = res.data;
 
     dispatch(planetsFetched(planetList));
