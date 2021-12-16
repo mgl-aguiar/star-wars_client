@@ -1,7 +1,10 @@
+import { React } from "react";
+import CharacterFinder from "../components/CharacterFinder";
+
 export default function Homepage() {
   return (
     <div>
-      <h1>homepage</h1>
+      <CharacterFinder />
     </div>
   );
 }
