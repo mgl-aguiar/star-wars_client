@@ -8,17 +8,22 @@ export const charactersFetched = (movieCharacters) => {
   };
 };
 
-export function fetchMovieCharacters(searchTerms, gender) {
+export function fetchMovieCharacters(search, gender, sort) {
   return async (dispatch) => {
-    let res;
+    // had some help figuring out this logic to define the sorting method.
+    // probably changing the backend a bit would have made it simpler.
+    const isSortByAge = sort.includes("age") ? sort : undefined;
+    const sortByAge =
+      isSortByAge && (isSortByAge.includes("Asc") ? "asc" : "desc");
 
-    if (gender) {
-      res = await axios.get(
-        `${apiUrl}/characters?search=${searchTerms}&gender=${gender}`
-      );
-    } else {
-      res = await axios.get(`${apiUrl}/characters?search=${searchTerms}`);
-    }
+    const isSortByHeight = sort.includes("height") ? sort : undefined;
+    const sortByHeight =
+      isSortByHeight && (isSortByHeight.includes("Asc") ? "asc" : "desc");
+
+    const res = await axios.get(`${apiUrl}/characters`, {
+      params: { search, gender, sortByAge, sortByHeight },
+    });
+
     const charactersList = res.data;
 
     dispatch(charactersFetched(charactersList));
