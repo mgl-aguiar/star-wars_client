@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPlanetsByClimate } from "../store/planets/actions";
-import { Link } from "react-router-dom";
-
 import { selectPlanetsByClimate } from "../store/planets/selectors";
+
+import "../style/finder.css";
 
 export default function CharacterFinder() {
   const dispatch = useDispatch();
@@ -17,15 +17,15 @@ export default function CharacterFinder() {
   };
 
   return (
-    <div>
-      <h1>Planet finder</h1>
-      <form onSubmit={search}>
+    <div className="finder">
+      <h1>Planet Finder</h1>
+      <form onSubmit={search} className="form">
         <label>
           Search for climate type to find planets:
           <input
             type="text"
             value={climate}
-            placeholder="example: 'tropical'"
+            placeholder="example: 'temperate'"
             onChange={(input) => setClimate(input.target.value)}
           ></input>
         </label>
@@ -33,15 +33,14 @@ export default function CharacterFinder() {
       </form>
 
       {filteredPlanets ? (
-        <ul>
-          {filteredPlanets.map((eachPlanet) => {
-            return (
-              <li>
-                <Link to="/">{eachPlanet.name}</Link>
-              </li>
-            );
-          })}
-        </ul>
+        <>
+          <h3>Planet list:</h3>
+          <ul className="list">
+            {filteredPlanets.map((eachPlanet) => {
+              return <li>{eachPlanet.name}</li>;
+            })}
+          </ul>
+        </>
       ) : null}
     </div>
   );
